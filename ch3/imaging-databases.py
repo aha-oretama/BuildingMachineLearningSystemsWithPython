@@ -5,7 +5,8 @@ import sys
 
 posts = [open(os.path.join("./data",f)).read() for f in os.listdir("./data")]
 
-vectorizer = CountVectorizer(min_df=1)
+vectorizer = CountVectorizer(min_df=1,stop_words='english')
+print(sorted(vectorizer.get_stop_words())[0:20])
 
 X_train = vectorizer.fit_transform(posts)
 n_samples, n_features = X_train.shape
@@ -23,6 +24,7 @@ print(new_post_vec.toarray())
 def dist_raw(v1, v2):
     delta = v1 - v2
     return sp.linalg.norm(delta.toarray())
+
 
 def dist_norm(v1, v2):
     v1_normalized = v1/sp.linalg.norm(v1.toarray())
@@ -42,7 +44,7 @@ for i in range(0, n_samples):
     post_vec = X_train.getrow(i)
     d = dist_norm(post_vec, new_post_vec)
     print("=== Post %i with dist=%.2f: %s" % (i, d, post))
-    if(d < best_dist):
+    if d < best_dist:
         best_dist = d
         best_i = i
         best_doc = post
