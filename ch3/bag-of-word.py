@@ -6,4 +6,3 @@ X = vectorizer.fit_transform(content)
 print(vectorizer.get_feature_names())
 
 print(X.toarray().transpose())
-
