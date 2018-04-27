@@ -2,10 +2,17 @@ import os
 import scipy as sp
 from sklearn.feature_extraction.text import CountVectorizer
 import sys
+import nltk.stem
 
 posts = [open(os.path.join("./data",f)).read() for f in os.listdir("./data")]
 
-vectorizer = CountVectorizer(min_df=1,stop_words='english')
+english_stemmer = nltk.stem.SnowballStemmer('english')
+class StemmedCounterVector(CountVectorizer):
+    def build_analyzer(self):
+        analyzer = super(StemmedCounterVector,self).build_analyzer()
+        return lambda doc: (english_stemmer.stem(w) for w in analyzer(doc))
+
+vectorizer = StemmedCounterVector(min_df=1,stop_words='english')
 print(sorted(vectorizer.get_stop_words())[0:20])
 
 X_train = vectorizer.fit_transform(posts)
