@@ -3,16 +3,24 @@ import scipy as sp
 from sklearn.feature_extraction.text import CountVectorizer
 import sys
 import nltk.stem
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 posts = [open(os.path.join("./data",f)).read() for f in os.listdir("./data")]
 
 english_stemmer = nltk.stem.SnowballStemmer('english')
-class StemmedCounterVector(CountVectorizer):
+class StemmedCounterVectorizer(CountVectorizer):
     def build_analyzer(self):
-        analyzer = super(StemmedCounterVector,self).build_analyzer()
+        analyzer = super(StemmedCounterVectorizer, self).build_analyzer()
         return lambda doc: (english_stemmer.stem(w) for w in analyzer(doc))
 
-vectorizer = StemmedCounterVector(min_df=1,stop_words='english')
+class StemmedTfidfVectorizer(TfidfVectorizer):
+    def build_analyzer(self):
+        analyzer = super(TfidfVectorizer, self).build_analyzer()
+        return lambda doc: (
+            english_stemmer.stem(w) for w in analyzer(doc))
+
+
+vectorizer = StemmedTfidfVectorizer(min_df=1, stop_words='english')
 print(sorted(vectorizer.get_stop_words())[0:20])
 
 X_train = vectorizer.fit_transform(posts)
