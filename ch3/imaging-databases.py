@@ -5,7 +5,7 @@ import sys
 import nltk.stem
 from sklearn.feature_extraction.text import TfidfVectorizer
 
-posts = [open(os.path.join("./data",f)).read() for f in os.listdir("./data")]
+posts = [open(os.path.join("./data-image",f)).read() for f in os.listdir("./data-image")]
 
 english_stemmer = nltk.stem.SnowballStemmer('english')
 class StemmedCounterVectorizer(CountVectorizer):

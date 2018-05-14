@@ -21,3 +21,7 @@ nbdist/
 
 ## OS
 .DS_Store
+!.gitkeep
+
+## Heavy data
+ch3/data-clustering/**
