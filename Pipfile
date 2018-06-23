@@ -14,6 +14,8 @@ sympy = "*"
 nose = "*"
 scikit-learn = "*"
 nltk = "*"
+gensim = "*"
+wordcloud = "*"
 
 [dev-packages]
 

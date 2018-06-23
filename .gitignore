@@ -23,5 +23,11 @@ nbdist/
 .DS_Store
 !.gitkeep
 
+## jupyter notebook
+.ipynb_checkpoints
+
 ## Heavy data
 ch3/data-clustering/**
+ch4/data/ap/**
+ch4/data/ap.tgz
+
